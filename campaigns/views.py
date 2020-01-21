@@ -4,6 +4,6 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 
 def campaign_home(request):
-    queryset = Campaign.objects.all()
+    queryset = Campaign.objects.all().order_by('start_date')
     context = {'queryset': queryset, 'title': ' Доступные походы'}
     return render(request, 'camp.html', context)

@@ -17,7 +17,7 @@ class Command(BaseCommand):
         names = bs_page.findAll('a', {'class': 'scroll-on-hover ellipsis'})
         prices = bs_page.findAll('span', {'class': 'price-font'})
         links = bs_page.findAll('a', {'class': 'scroll-on-hover ellipsis'})
-        start_dates = []; end_dates = []
+        start_dates = dates[:]; end_dates = dates[:]
 
         for idx in range(len(dates)):
             dates[idx] = dates[idx].get_text()
@@ -27,7 +27,7 @@ class Command(BaseCommand):
 
         for idx in range(len(dates)):
             start_dates[idx] = dateparser.parse(re.search(r'.*(?=-)', dates[idx])[0])
-            end_dates[idx] = dateparser.parse(re.search(r'(?<=-).*', dates[0])[0])
+            end_dates[idx] = dateparser.parse(re.search(r'(?<=-).*', dates[idx])[0])
 
         
 
@@ -35,6 +35,6 @@ class Command(BaseCommand):
             Campaign.objects.create(title = names[idx],
             price=prices[idx],
             link=links[idx],
-            organizer="vpoXod.ru"
+            organizer="vpoXod.ru",
             start_date = start_dates[idx],
             end_date = end_dates[idx])
