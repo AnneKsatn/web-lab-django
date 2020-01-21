@@ -18,16 +18,17 @@
 
         {% for i in queryset %}
         <div class="row justify-content-center mb-3">
-            <div class="card col-5"> 
-            <h5 class="card-title text-center">{{i.title}}</h5>
+            <div class="card col-5 pl-0 pr-0"> 
 
+            <div class="card-header">Организатор: {{i.organizer}}</div>
+
+            <h5 class="card-title text-center pl-5 pr-5 pt-3">{{i.title}}</h5>
             <div class="row  text-center mb-1">
-                <h5 class="col-sm">{{i.date}}</h5>
-                <h5 class="col-sm">{{i.price}}</h5>
+                <p class="col-sm">{{i.date}}</p>
+                <p class="col-sm">{{i.price}}</p>
             </div>
             <a href={{i.link}}  class="btn btn-primary align-self-center mb-2" 
             style="width: 15rem;">Подробнее</a>
-
         </div>
     </div>
         {% endfor %}

@@ -5,6 +5,8 @@ class Campaign(models.Model):
     date=models.CharField(max_length=120)
     price=models.CharField(max_length=120)
     link=models.CharField(max_length=120)
+    organizer=models.CharField(max_length=120, default=None)
+
 
 def __unicode__(self):
     return self.title
