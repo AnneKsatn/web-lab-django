@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+     
+    </head>
+
+    <body>
+        <h1> {{ title }} </h1>
+
+        {% for i in queryset %}
+        <div> 
+            <h4>
+                {{i.title}}
+            </h4>
+        </div>
+        {% endfor %}
+
+    </body>
+</html>
