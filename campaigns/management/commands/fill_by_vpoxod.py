@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 import requests
+import dateparser
 
 from bs4 import BeautifulSoup as BS
 import re
@@ -16,6 +17,7 @@ class Command(BaseCommand):
         names = bs_page.findAll('a', {'class': 'scroll-on-hover ellipsis'})
         prices = bs_page.findAll('span', {'class': 'price-font'})
         links = bs_page.findAll('a', {'class': 'scroll-on-hover ellipsis'})
+        start_dates = []; end_dates = []
 
         for idx in range(len(dates)):
             dates[idx] = dates[idx].get_text()
@@ -23,10 +25,16 @@ class Command(BaseCommand):
             prices[idx] = prices[idx].get_text().replace(u'\xa0', u' ')
             links[idx] = "https://www.vpoxod.ru/" + links[idx].attrs["href"]
 
-        
         for idx in range(len(dates)):
-            Campaign.objects.create(title = names[idx], 
-            date=dates[idx], 
+            start_dates[idx] = dateparser.parse(re.search(r'.*(?=-)', dates[idx])[0])
+            end_dates[idx] = dateparser.parse(re.search(r'(?<=-).*', dates[0])[0])
+
+        
+
+        for idx in range(len(dates)):
+            Campaign.objects.create(title = names[idx],
             price=prices[idx],
             link=links[idx],
-            organizer="vpoXod.ru")
+            organizer="vpoXod.ru"
+            start_date = start_dates[idx],
+            end_date = end_dates[idx])
